@@ -1,0 +1,3 @@
+apisix/debian/files
+apisix/debian/.debhelper/
+apisix/debian/apisix/

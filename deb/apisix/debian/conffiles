@@ -1,0 +1,4 @@
+/usr/local/apisix/conf/config.yaml
+/usr/local/apisix/conf/mime.types
+/usr/local/apisix/conf/cert/apisix.crt
+/usr/local/apisix/conf/cert/apisix.key

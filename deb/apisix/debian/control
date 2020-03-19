@@ -1,0 +1,17 @@
+Source: apisix
+Section: unknown
+Priority: optional
+Maintainer: Yong Li <liyong@apache.org>
+Build-Depends: debhelper (>=9), luarocks, openresty (>=1.15.8.1)
+Standards-Version: 3.9.6
+Homepage: https://apisix.apache.org
+Vcs-Git: https://github.com/apache/incubator-apisix.git
+Vcs-Browser: https://github.com/apache/incubator-apisix
+
+Package: apisix
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, openresty (>=1.15.8.1), lua5.1
+Description: cloud-native microservices API gateway
+ Apache APISIX is based on Nginx and etcd. Compared with traditional API gateways,
+ APISIX has dynamic routing and plug-in hot loading, which is especially suitable
+ for API management under micro-service system.

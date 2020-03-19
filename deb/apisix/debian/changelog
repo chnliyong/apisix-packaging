@@ -1,0 +1,5 @@
+apisix (1.1-0) unstable; urgency=medium
+
+  * Bump version to 1.1-0
+
+ -- Yong Li <liyong@apache.org>  Tue, 17 Mar 2020 18:05:15 +0800
