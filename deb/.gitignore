@@ -1,3 +1,6 @@
+apisix/[^d]*
+apisix/d[^e]*
+apisix/de[^b]*
 apisix/debian/files
 apisix/debian/.debhelper/
 apisix/debian/apisix.debhelper.log
