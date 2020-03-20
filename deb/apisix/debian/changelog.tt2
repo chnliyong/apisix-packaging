@@ -1,4 +1,4 @@
-apisix (1.1-0) unstable; urgency=medium
+apisix (1.1-0~[% distro %]1) [% distro %]; urgency=medium
 
   * Bump version to 1.1-0
 

@@ -1,3 +1,6 @@
 apisix/debian/files
 apisix/debian/.debhelper/
+apisix/debian/apisix.debhelper.log
 apisix/debian/apisix/
+apisix/debian/changelog
+apisix/debian/*.substvars

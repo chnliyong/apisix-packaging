@@ -1,0 +1,28 @@
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,25 @@
++SHEBANG=\#!/usr/local/openresty/luajit/bin/luajit
++INSTALL?=install
++prefix ?= /usr/local
++apisixhome ?= $(prefix)/apisix
++bindir ?= /usr/bin
++
++clean:
++	rm -f bin/apisix.build
++
++build: bin/apisix.build
++
++bin/apisix.build: bin/apisix
++	sed -e '1s@^.*$$@$(SHEBANG)@' \
++	    -e '1a package.path = "/usr/local/apisix/lua/?.lua;" .. package.path' \
++	    bin/apisix > bin/apisix.build
++
++install: 
++	mkdir -p $(DESTDIR)$(apisixhome)/
++	mkdir -p $(DESTDIR)$(bindir)
++	cp -r conf $(DESTDIR)$(apisixhome)/
++	cp -r logs $(DESTDIR)$(apisixhome)/
++	cp -r lua $(DESTDIR)$(apisixhome)/
++	$(INSTALL) bin/apisix.build $(DESTDIR)$(bindir)/apisix
++
++.PHONY: clean build install
