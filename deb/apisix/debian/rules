@@ -4,16 +4,16 @@
 export DH_VERBOSE = 1
 
 clean:
-	$(MAKE) clean
+	$(MAKE) distclean
 	rm -rf debian/apisix/
 	rm -rf debian/.debhelper/
 	rm -rf debian/files
 
 build:
-	$(MAKE) build
+	$(MAKE) distbuild
 
 binary:
-	$(MAKE) install DESTDIR=$$(pwd)/debian/apisix
+	$(MAKE) distinstall DESTDIR=$$(pwd)/debian/apisix
 	dh_installchangelogs
 	dh_strip
 	dh_makeshlibs

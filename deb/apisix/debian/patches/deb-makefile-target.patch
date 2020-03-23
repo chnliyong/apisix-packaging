@@ -1,0 +1,65 @@
+--- a/Makefile
++++ b/Makefile
+@@ -185,3 +185,62 @@
+ endif
+ 	.travis/openwhisk-utilities/scancode/scanCode.py --config .travis/ASF-Release.cfg ./
+ 
++
++
++
++
++# Add for build deb package
++prefix ?= /usr/local
++apisixhome ?= $(prefix)/apisix
++apisixdepsdir ?= $(apisixhome)/deps
++apisixconfdir ?= $(apisixhome)/conf
++apisixlogdir ?= $(apisixhome)/logs
++apisixluadir ?= $(apisixhome)/lua
++bindir ?= /usr/bin
++
++APISIX_FILES = $(shell find lua/ -type f -name '*.lua')
++APISIX_DEP_FILES = $(shell find deps/ -type f -name '*.so' -o -name '*.lua')
++APISIX_CONF_FILES = conf/mime.types conf/config.yaml conf/cert/apisix.crt conf/cert/apisix.key
++INSTALL_FILES = $(DESTDIR)$(bindir)/apisix $(DESTDIR)$(apisixlogdir)/placeholder.txt \
++	$(patsubst conf/%, $(DESTDIR)$(apisixconfdir)/%, $(APISIX_CONF_FILES)) \
++	$(patsubst lua/%, $(DESTDIR)$(apisixluadir)/%, $(APISIX_FILES)) \
++	$(patsubst deps/%, $(DESTDIR)$(apisixdepsdir)/%, $(APISIX_DEP_FILES))
++
++.PHONY: distclean
++distclean:
++	# remove installed deps
++	rm -rf deps
++	# clean generated log file
++	find logs -maxdepth 1 ! -name 'logs' ! -name 'placeholder.txt' -print | xargs rm -rf
++
++.PHONY: distbuild
++distbuild:
++	luarocks install rockspec/apisix-master-0.rockspec --tree=deps --only-deps
++
++### distinstall:      Install apisix to /usr/local/apisix with dependencies
++distinstall: $(INSTALL_FILES)
++
++# https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
++$(DESTDIR)$(bindir)/apisix: bin/apisix
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
++
++$(DESTDIR)$(apisixlogdir)/placeholder.txt: logs/placeholder.txt
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
++
++$(DESTDIR)$(apisixluadir)/%.lua: lua/%.lua
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
++
++$(DESTDIR)$(apisixdepsdir)/%.lua: deps/%.lua
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
++
++$(DESTDIR)$(apisixdepsdir)/%.so: deps/%.so
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
++
++$(DESTDIR)$(apisixconfdir)/%: conf/%
++	$(INSTALL) -d "$(@D)"
++	$(INSTALL) "$<" "$@"
