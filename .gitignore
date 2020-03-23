@@ -4,6 +4,7 @@
 *.swo
 
 *.deb
+*.ddeb
 *.gz
 *.xz
 *.bz2
