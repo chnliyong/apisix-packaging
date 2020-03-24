@@ -1,5 +1,5 @@
 Source: apisix
-Section: unknown
+Section: httpd
 Priority: optional
 Maintainer: Yong Li <liyong@apache.org>
 Build-Depends: debhelper (>=9), luarocks (>=2.4.2), openresty (>=1.15.8.1)
