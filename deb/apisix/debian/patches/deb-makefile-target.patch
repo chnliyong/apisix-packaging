@@ -1,6 +1,6 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -185,3 +185,62 @@
+@@ -185,3 +185,68 @@
  endif
  	.travis/openwhisk-utilities/scancode/scanCode.py --config .travis/ASF-Release.cfg ./
  
@@ -31,6 +31,7 @@
 +	rm -rf deps
 +	# clean generated log file
 +	find logs -maxdepth 1 ! -name 'logs' ! -name 'placeholder.txt' -print | xargs rm -rf
++	rm -f bin/apisix.build
 +
 +.PHONY: distbuild
 +distbuild:
@@ -39,8 +40,13 @@
 +### distinstall:      Install apisix to /usr/local/apisix with dependencies
 +distinstall: $(INSTALL_FILES)
 +
++bin/apisix.build: bin/apisix
++	sed -e '1s@#!.*$$@#!/usr/local/openresty/luajit/bin/luajit@' \
++	-e '1a \
++	package.path = "/usr/local/apisix/lua/?.lua;" .. package.path' bin/apisix > bin/apisix.build
++
 +# https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
-+$(DESTDIR)$(bindir)/apisix: bin/apisix
++$(DESTDIR)$(bindir)/apisix: bin/apisix.build
 +	$(INSTALL) -d "$(@D)"
 +	$(INSTALL) "$<" "$@"
 +
